@@ -1,0 +1,41 @@
+<configure
+   xmlns="http://namespaces.zope.org/zope"
+   xmlns:zojax="http://namespaces.zope.org/zojax"
+   xmlns:browser="http://namespaces.zope.org/browser"
+   i18n_domain="zope">
+
+  <zojax:content
+     title="Content1"
+     schema=".content.IContent1"
+     name="tests.content1"
+     class=".content.Content1"
+     type="zojax.content.type.interfaces.IActivePortalType" />
+
+  <class class=".content.Content1">
+    <implements interface="zojax.ownership.interfaces.IOwnerAware" />
+    <implements interface="zojax.content.type.interfaces.ISearchableContent" />
+
+    <require
+       permission="zope.Public"
+       interface="zojax.content.type.interfaces.IItem"
+       set_schema="zojax.content.type.interfaces.IItem" />
+  </class>
+
+  <zojax:content
+     title="Content2"
+     schema=".content.IContent2"
+     name="tests.content2"
+     class=".content.Content2"
+     type="zojax.content.type.interfaces.IActivePortalType" />
+
+  <class class=".content.Content2">
+    <implements interface="zojax.ownership.interfaces.IOwnerAware" />
+    <implements interface="zojax.content.type.interfaces.ISearchableContent" />
+
+    <require
+       permission="zope.Public"
+       interface="zojax.content.type.interfaces.IItem"
+       set_schema="zojax.content.type.interfaces.IItem" />
+  </class>
+
+</configure>

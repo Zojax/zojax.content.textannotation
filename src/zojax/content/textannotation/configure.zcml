@@ -1,0 +1,18 @@
+<configure
+   xmlns="http://namespaces.zope.org/zope"
+   xmlns:zojax="http://namespaces.zope.org/zojax"
+   i18n_domain="zojax.content.textannotation">
+
+  <!-- configlet-->
+  <zojax:configlet
+     name="content.textannotation"
+     title="Text annotation"
+     description="This area allows you to configure getting content text annotation."
+     schema=".interfaces.ITextAnnotationConfiglet"
+     permission="zojax.Configure">
+  </zojax:configlet>
+
+  <!-- content annotation default adapter -->
+  <adapter factory=".annotation.TextAnnotation" />
+
+</configure>

@@ -1,0 +1,54 @@
+=============
+Browser tests
+=============
+
+    >>> from zope import interface, component, event
+    >>> from zope.testbrowser.testing import Browser
+    >>> from zope.app.component.hooks import setSite
+    >>> from zope.publisher.browser import TestRequest
+    >>> from zope.lifecycleevent import ObjectCreatedEvent, ObjectModifiedEvent
+    >>> from zojax.content.textannotation.interfaces \
+    ...      import ITextAnnotationConfiglet, ITextAnnotation
+    >>> from zojax.content.textannotation.tests.content import Content2, Content1
+    >>> request = TestRequest()
+
+    >>> root = getRootFolder()
+    >>> setSite(root)
+
+    >>> content11 = root['content11']
+    >>> content12 = root['content12']
+    >>> content21 = root['content21']
+    >>> content22 = root['content22']
+    >>> configlet = component.getUtility(ITextAnnotationConfiglet)
+
+    >>> admin = Browser()
+    >>> admin.addHeader("Authorization", "Basic mgr:mgrpw")
+    >>> admin.handleErrors = False
+
+We get annotation from content
+
+    >>> component.getMultiAdapter((content11, request), ITextAnnotation).getText()
+    u''
+
+Let's set description
+    >>> content11.description = 'some text'
+    >>> component.getMultiAdapter((content11, request), ITextAnnotation).getText()
+    u'some text'
+
+    >>> component.getMultiAdapter((content11, request), ITextAnnotation).getText(2)
+    u'some...'
+
+Let's set long description
+    >>> content11.description = 'dfsfdasdf sdfsadfs dskfpuqwiew iudpoASDUOAsdj;kdj; jdf;dj;ll sdhlkjshfskjhfksj djhfljsdhflkjsdkj jdhfkjshdlfkjhf sjdhfljshflj jhdfjsdhfjkshd djhfshjhsfjk jhdfjshjfh jshjksdhf jshfkjhfkjshdjfhjdsfhsjdfhsjdfhjdshjfhdsjkfh ksdfhj hdfjs fhj hfjhfuwewqF;KLDS JDSFYUIWFHSDFJSDHFJSDLF'
+    >>> component.getMultiAdapter((content11, request), ITextAnnotation).getText(100, 150)
+    u'dfsfdasdf sdfsadfs dskfpuqwiew iudpoASDUOAsdj;kdj; jdf;dj;ll sdhlkjshfskjhfksj djhfljsdhflkjsdkj jdhfkjshdlfkjhf...'
+
+Remove content
+--------------
+
+    >>> del root['content21']
+    >>> del root['content22']
+    >>> del root['content11']
+
+    >>> setSite(None)
+
