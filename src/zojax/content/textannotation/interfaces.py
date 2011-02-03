@@ -45,5 +45,5 @@ class ITextAnnotationConfiglet(interface.Interface):
 
 class ITextAnnotation(interface.Interface):
 
-    def getText(min_length, max_length):
+    def getText(min_length, max_length, text=None):
         pass
